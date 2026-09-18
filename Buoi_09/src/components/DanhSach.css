@@ -1,0 +1,32 @@
+.danh-sach {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.danh-sach__muc {
+  padding: 10px 12px;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.danh-sach__muc:last-child {
+  border-bottom: none;
+}
+
+.nut-dat-mon {
+  background-color: #0f6e6a;
+  color: #ffffff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.nut-dat-mon:hover {
+  background-color: #0c5653;
+}
