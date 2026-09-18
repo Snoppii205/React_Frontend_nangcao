@@ -8,12 +8,6 @@ Repo tổng hợp bài học và bài thực hành môn **Web FrontEnd nâng cao
 
 ---
 
-## 📚 Mục lục thực hành các buổi
-
-| Buổi học | Nội dung | Trạng thái |
-| :--- | :--- | :--- |
-| **[Buổi 01](./Buoi_01/)** | Quan sát và so sánh ứng dụng React đầu tiên (Lab 1, 2, 3) | ✅ Hoàn thành |
-| **Buổi 02** | Khởi tạo dự án thực tế với Vite + React | ⏳ Sắp tới |
 
 ---
 
