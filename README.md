@@ -15,6 +15,7 @@ Repo tổng hợp bài học và bài thực hành môn **Web FrontEnd nâng cao
 | **[Buổi 01](./Buoi_01/)** | Quan sát và so sánh ứng dụng React đầu tiên (Lab 1, 2, 3) | ✅ Hoàn thành |
 | **Buổi 02** | Khởi tạo dự án thực tế với Vite + React | ⏳ Sắp tới |
 | **[Buổi 09](./Buoi_09/)** | Tái sử dụng và kết hợp thành phần (Lab 1 - Lab 5) | ✅ Hoàn thành |
+| **[Kiểm tra giữa kỳ](./Kiemtra_giuaky/)** | Ứng dụng đặt món "Quán Huế Xưa" (React 19 + Vite + Hooks + LocalStorage) | ✅ Hoàn thành |
 
 ---
 
