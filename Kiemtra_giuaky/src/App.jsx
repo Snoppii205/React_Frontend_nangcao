@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
 import { FaTrashAlt, FaCheckCircle } from 'react-icons/fa';
-import { DANH_SACH_MON } from './data/monAn';
-import { Header } from './components/Header';
-import { DanhSachMon } from './components/DanhSachMon';
-import { GioHang } from './components/GioHang';
-import { FormDatMon } from './components/FormDatMon';
-import { Khung } from './components/Khung';
-import { useLocalStorage } from './hooks/useLocalStorage';
+import { DS_MON } from './data/monAn';
+import Header from './components/Header';
+import DanhSachMon from './components/DanhSachMon';
+import GioHang from './components/GioHang';
+import FormDatMon from './components/FormDatMon';
+import Khung from './components/Khung';
+import useLocalStorage from './hooks/useLocalStorage';
 import './App.css';
 
-function App() {
-  const [dsMon] = useState(DANH_SACH_MON);
+export default function App() {
+  const [dsMon] = useState(DS_MON);
   const [idDangChon, setIdDangChon] = useState(null);
   const [gio, setGio] = useLocalStorage('gio-hang', []);
   const [thongBaoThanhCong, setThongBaoThanhCong] = useState('');
@@ -28,6 +28,10 @@ function App() {
     });
   }
 
+  function chonMon(id) {
+    setIdDangChon(id);
+  }
+
   const tongPhan = gio.reduce((tong, item) => tong + item.soLuong, 0);
 
   useEffect(() => {
@@ -40,6 +44,7 @@ function App() {
   }, [tongPhan]);
 
   function guiDon(thongTinKhach) {
+    console.log('Gửi đơn hàng:', thongTinKhach);
     setThongBaoThanhCong(`Đã nhận đơn của ${thongTinKhach.hoTen}`);
     setGio([]);
     setFormKey((prevKey) => prevKey + 1);
@@ -58,12 +63,14 @@ function App() {
 
       <main className="noi-dung-chinh">
         <section>
-          <DanhSachMon
-            dsMon={dsMon}
-            idDangChon={idDangChon}
-            onChon={(id) => setIdDangChon(id)}
-            onDat={datMon}
-          />
+          <Khung tieuDe="Thực đơn">
+            <DanhSachMon
+              dsMon={dsMon}
+              idDangChon={idDangChon}
+              onChon={chonMon}
+              onDat={datMon}
+            />
+          </Khung>
         </section>
 
         <aside>
@@ -85,7 +92,7 @@ function App() {
             <GioHang gio={gio} dsMon={dsMon} />
           </Khung>
 
-          <Khung tieuDe="Thông tin đặt món">
+          <Khung tieuDe="Thông tin nhận món">
             <FormDatMon
               key={formKey}
               choPhepGui={gio.length > 0}
@@ -102,5 +109,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

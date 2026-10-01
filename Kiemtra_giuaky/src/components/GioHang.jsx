@@ -1,19 +1,19 @@
 import { useMemo } from 'react';
 import { dinhDangGia } from '../utils/dinhDangGia';
 
-export function GioHang({ gio, dsMon }) {
+export default function GioHang({ gio, dsMon }) {
   const tongTien = useMemo(() => {
-    return gio.reduce((tong, item) => {
-      const mon = dsMon.find((m) => m.id === item.id);
-      const donGia = mon ? mon.gia : 0;
-      return tong + donGia * item.soLuong;
+    return gio.reduce((sum, dong) => {
+      const mon = dsMon.find((m) => m.id === dong.id);
+      if (!mon) return sum;
+      return sum + mon.gia * dong.soLuong;
     }, 0);
   }, [gio, dsMon]);
 
   if (gio.length === 0) {
     return (
-      <div data-testid="gio-hang">
-        <p className="gio-hang-trong">Giỏ hàng trống</p>
+      <div data-testid="gio-hang" className="gio-hang-trong">
+        <p>Giỏ hàng trống</p>
       </div>
     );
   }
@@ -21,15 +21,14 @@ export function GioHang({ gio, dsMon }) {
   return (
     <div data-testid="gio-hang">
       <ul className="danh-sach-gio">
-        {gio.map((item) => {
-          const mon = dsMon.find((m) => m.id === item.id);
-          const tenMon = mon ? mon.ten : 'Món không tồn tại';
-          const thanhTien = mon ? mon.gia * item.soLuong : 0;
+        {gio.map((dong) => {
+          const mon = dsMon.find((m) => m.id === dong.id);
+          if (!mon) return null;
+          const thanhTien = mon.gia * dong.soLuong;
 
           return (
-            <li key={item.id} className="muc-gio">
-              <span>{tenMon} × {item.soLuong}</span>
-              <strong>{dinhDangGia(thanhTien)}</strong>
+            <li key={dong.id} className="muc-gio">
+              {mon.ten} × {dong.soLuong} — {dinhDangGia(thanhTien)}
             </li>
           );
         })}
@@ -37,9 +36,9 @@ export function GioHang({ gio, dsMon }) {
 
       <div className="tong-tien-container">
         <span>Tổng cộng:</span>
-        <span className="tong-tien-so" data-testid="tong-tien">
+        <strong className="tong-tien-so" data-testid="tong-tien">
           {dinhDangGia(tongTien)}
-        </span>
+        </strong>
       </div>
     </div>
   );

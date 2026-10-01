@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { FaPaperPlane } from 'react-icons/fa';
 import { kiemTra } from '../utils/kiemTra';
 
-export function FormDatMon({ choPhepGui, onGui }) {
+export default function FormDatMon({ onGui, choPhepGui }) {
   const [hoTen, setHoTen] = useState('');
   const [soDienThoai, setSoDienThoai] = useState('');
   const [ghiChu, setGhiChu] = useState('');

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export function useLocalStorage(khoa, giaTriDau) {
+export default function useLocalStorage(khoa, giaTriDau) {
   const [giaTri, setGiaTri] = useState(() => {
     try {
       const duLieu = localStorage.getItem(khoa);

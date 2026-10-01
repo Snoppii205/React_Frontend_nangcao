@@ -1,6 +1,6 @@
-import { MonAnCard } from './MonAnCard';
+import MonAnCard from './MonAnCard';
 
-export function DanhSachMon({ dsMon, idDangChon, onChon, onDat }) {
+export default function DanhSachMon({ dsMon, idDangChon, onChon, onDat }) {
   return (
     <div className="danh-sach-mon">
       {dsMon.map((mon) => (

@@ -1,21 +1,23 @@
-import { FaPlus, FaFire } from 'react-icons/fa';
+import { FaPlus } from 'react-icons/fa';
 import { dinhDangGia } from '../utils/dinhDangGia';
 
-export function MonAnCard({ mon, dangChon, onChon, onDat }) {
+export default function MonAnCard({ mon, dangChon, onChon, onDat }) {
+  function xuLyBamThe() {
+    if (onChon) onChon(mon.id);
+  }
+
+  function xuLyBamDatMon(e) {
+    e.stopPropagation();
+    if (onDat) onDat(mon.id);
+  }
+
   return (
-    <div
+    <article
       className={`the-mon-an ${dangChon ? 'dang-chon' : ''}`}
-      onClick={() => onChon && onChon(mon.id)}
+      onClick={xuLyBamThe}
     >
       <div className="the-mon-an__dau">
-        <div className="the-mon-an__nhom-ten">
-          <h3 className="the-mon-an__ten">{mon.ten}</h3>
-          {mon.noiBat && (
-            <span className="huy-hieu-hot">
-              <FaFire size={11} /> Bán chạy
-            </span>
-          )}
-        </div>
+        <h3 className="the-mon-an__ten">{mon.ten}</h3>
         <span className="the-mon-an__gia">{dinhDangGia(mon.gia)}</span>
       </div>
 
@@ -34,14 +36,11 @@ export function MonAnCard({ mon, dangChon, onChon, onDat }) {
           type="button"
           className="nut-dat-mon"
           disabled={mon.daHet}
-          onClick={(e) => {
-            e.stopPropagation();
-            if (onDat) onDat(mon.id);
-          }}
+          onClick={xuLyBamDatMon}
         >
           <FaPlus size={11} /> Đặt món
         </button>
       </div>
-    </div>
+    </article>
   );
 }
