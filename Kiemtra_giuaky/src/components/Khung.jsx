@@ -1,4 +1,3 @@
-// Khung.jsx - Đáp ứng C4.2 (Component Composition & children)
 export function Khung({ tieuDe, hanhDong, children }) {
   return (
     <div className="khung">

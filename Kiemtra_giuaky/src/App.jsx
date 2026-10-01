@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { FaTrashAlt, FaCheckCircle } from 'react-icons/fa';
 import { DANH_SACH_MON } from './data/monAn';
 import { Header } from './components/Header';
 import { DanhSachMon } from './components/DanhSachMon';
@@ -10,22 +11,15 @@ import './App.css';
 
 function App() {
   const [dsMon] = useState(DANH_SACH_MON);
-
-  // C2.4: State lưu id món đang được chọn
   const [idDangChon, setIdDangChon] = useState(null);
-
-  // C3.3: State giỏ hàng lưu bằng custom hook useLocalStorage
   const [gio, setGio] = useLocalStorage('gio-hang', []);
-
-  // C4.3: State lưu thông báo thành công và key để reset form
   const [thongBaoThanhCong, setThongBaoThanhCong] = useState('');
   const [formKey, setFormKey] = useState(0);
 
-  // C2.2: Hàm datMon cập nhật giỏ hàng theo phong cách immutable
   function datMon(id) {
     setGio((prevGio) => {
-      const daCoTrongGio = prevGio.find((item) => item.id === id);
-      if (daCoTrongGio) {
+      const daCo = prevGio.find((item) => item.id === id);
+      if (daCo) {
         return prevGio.map((item) =>
           item.id === id ? { ...item, soLuong: item.soLuong + 1 } : item
         );
@@ -34,10 +28,8 @@ function App() {
     });
   }
 
-  // C2.3: Derived data - tính tổng số phần ăn trực tiếp từ gio
   const tongPhan = gio.reduce((tong, item) => tong + item.soLuong, 0);
 
-  // C3.2: useEffect đồng bộ document.title
   useEffect(() => {
     const tenQuan = import.meta.env.VITE_TEN_QUAN || 'Quán Huế Xưa';
     if (tongPhan === 0) {
@@ -47,15 +39,9 @@ function App() {
     }
   }, [tongPhan]);
 
-  // C4.3: Xử lý gửi đơn hàng
   function guiDon(thongTinKhach) {
-    // 1. Hiển thị thông báo "Đã nhận đơn của <Họ tên>"
     setThongBaoThanhCong(`Đã nhận đơn của ${thongTinKhach.hoTen}`);
-
-    // 2. Làm trống giỏ hàng
     setGio([]);
-
-    // 3. Reset FormDatMon bằng cách thay đổi React key
     setFormKey((prevKey) => prevKey + 1);
   }
 
@@ -63,9 +49,9 @@ function App() {
     <div className="ung-dung">
       <Header tongPhan={tongPhan} />
 
-      {/* C4.3: Thông báo đặt đơn thành công render bên trong <p role="status"> */}
       {thongBaoThanhCong && (
         <p className="thong-bao-thanh-cong" role="status">
+          <FaCheckCircle size={16} style={{ marginRight: 8, verticalAlign: 'text-bottom' }} />
           {thongBaoThanhCong}
         </p>
       )}
@@ -81,7 +67,6 @@ function App() {
         </section>
 
         <aside>
-          {/* C4.2: Khung giỏ hàng với tiêu đề "Giỏ hàng" và nút "Xóa giỏ hàng" */}
           <Khung
             tieuDe="Giỏ hàng"
             hanhDong={
@@ -91,6 +76,7 @@ function App() {
                   className="nut-xoa-gio"
                   onClick={() => setGio([])}
                 >
+                  <FaTrashAlt size={11} style={{ marginRight: 4 }} />
                   Xóa giỏ hàng
                 </button>
               )
@@ -99,7 +85,6 @@ function App() {
             <GioHang gio={gio} dsMon={dsMon} />
           </Khung>
 
-          {/* Form đặt món - Reset bằng key khi formKey thay đổi */}
           <Khung tieuDe="Thông tin đặt món">
             <FormDatMon
               key={formKey}
@@ -109,6 +94,11 @@ function App() {
           </Khung>
         </aside>
       </main>
+
+      <footer className="phan-chan">
+        <p>© 2026 Quán Huế Xưa — Học phần Web FrontEnd nâng cao (INT.7.18)</p>
+        <p>Sinh viên thực hiện: Hoàng Văn Thuận — MSSV: 2301ITA044</p>
+      </footer>
     </div>
   );
 }

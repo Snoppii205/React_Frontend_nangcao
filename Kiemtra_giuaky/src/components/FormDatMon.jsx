@@ -1,15 +1,13 @@
-// FormDatMon.jsx - Đáp ứng C3.4, C4.1, C4.3
 import { useState, useRef, useEffect } from 'react';
+import { FaPaperPlane } from 'react-icons/fa';
 import { kiemTra } from '../utils/kiemTra';
 
 export function FormDatMon({ choPhepGui, onGui }) {
-  // C4.1: Controlled form states
   const [hoTen, setHoTen] = useState('');
   const [soDienThoai, setSoDienThoai] = useState('');
   const [ghiChu, setGhiChu] = useState('');
   const [errors, setErrors] = useState({});
 
-  // C3.4: useRef & useEffect tự động focus vào ô "Họ tên" khi form xuất hiện
   const hoTenRef = useRef(null);
 
   useEffect(() => {
@@ -18,7 +16,6 @@ export function FormDatMon({ choPhepGui, onGui }) {
     }
   }, []);
 
-  // Validate từng trường trên sự kiện onBlur
   function handleBlur(tenTruong, giaTri) {
     const thongBaoLoi = kiemTra(tenTruong, giaTri);
     setErrors((prev) => ({
@@ -27,7 +24,6 @@ export function FormDatMon({ choPhepGui, onGui }) {
     }));
   }
 
-  // C4.1: Validate toàn bộ biểu mẫu trên sự kiện onSubmit
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -40,12 +36,10 @@ export function FormDatMon({ choPhepGui, onGui }) {
 
     setErrors(danhSachLoi);
 
-    // Nếu không hợp lệ: ngăn chặn gửi đơn, KHÔNG gọi onGui
     if (loiHoTen || loiSdt) {
       return;
     }
 
-    // Khi hợp lệ: loại bỏ khoảng trắng thừa xung quanh và gọi onGui
     if (onGui) {
       onGui({
         hoTen: hoTen.trim(),
@@ -68,7 +62,6 @@ export function FormDatMon({ choPhepGui, onGui }) {
           onBlur={() => handleBlur('hoTen', hoTen)}
           placeholder="Nhập họ và tên..."
         />
-        {/* C4.1: Thông báo lỗi phải dùng <p className="loi" role="alert"> */}
         {errors.hoTen && (
           <p className="loi" role="alert">
             {errors.hoTen}
@@ -104,12 +97,12 @@ export function FormDatMon({ choPhepGui, onGui }) {
         />
       </div>
 
-      {/* C4.3: Nút "Gửi đơn" chỉ enabled khi choPhepGui === true */}
       <button
         type="submit"
         className="nut-gui-don"
         disabled={!choPhepGui}
       >
+        <FaPaperPlane size={13} style={{ marginRight: 6 }} />
         Gửi đơn
       </button>
     </form>

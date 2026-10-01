@@ -1,9 +1,7 @@
-// GioHang.jsx - Đáp ứng C3.1
 import { useMemo } from 'react';
 import { dinhDangGia } from '../utils/dinhDangGia';
 
 export function GioHang({ gio, dsMon }) {
-  // C3.1: useMemo tính tổng tiền, phụ thuộc vào gio và dsMon
   const tongTien = useMemo(() => {
     return gio.reduce((tong, item) => {
       const mon = dsMon.find((m) => m.id === item.id);
@@ -12,7 +10,6 @@ export function GioHang({ gio, dsMon }) {
     }, 0);
   }, [gio, dsMon]);
 
-  // C3.1: Khi giỏ hàng trống hiển thị chính xác "Giỏ hàng trống"
   if (gio.length === 0) {
     return (
       <div data-testid="gio-hang">
